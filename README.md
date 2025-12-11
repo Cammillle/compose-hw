@@ -11,4 +11,4 @@
 Создать кастомную вьюгруппу, которая будет работать как Column, но располагать все элементы по диагонали. Создать для этой фукнции функцию Preview,
 чтобы можно было смотреть на результат.
 
-[custom\_view.png](https://sourcecraft.dev/alfa-budushchee/compose-home-work/browse/captures/custom_view.png?rev=main&editMode=plain)
+![](https://sourcecraft.dev/alfa-budushchee/compose-home-work/browse/captures/custom\_view.png?rev=main&editMode=plain)
