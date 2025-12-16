@@ -91,9 +91,8 @@ fun OrderButton(
     Button(
         onClick = onClick,
         modifier = modifier
-            .width(Dimens.OrderCupcakeButtonWidth)
-            .height(Dimens.ButtonHeight),
-        shape = RoundedCornerShape(8.dp),
+            .width(Dimens.OrderCupcakeButtonWidth),
+        shape = RoundedCornerShape(2.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = MaterialTheme.colorScheme.onPrimary,
