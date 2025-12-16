@@ -34,6 +34,9 @@ import com.example.cupcake.theme.Dimens
 @Composable
 fun PickupScreen(
     modifier: Modifier = Modifier,
+    price: Double,
+    dateOptions: List<String>,
+    onDatePick: (String) -> Unit,
     onCancelOrder: () -> Unit,
     onNextButtonClicked: () -> Unit,
 ) {
@@ -42,18 +45,16 @@ fun PickupScreen(
             .background(MaterialTheme.colorScheme.background)
             .padding(8.dp),
         horizontalAlignment = Alignment.Start
-    )
-    {
-        RadioGroup()
+    ) {
+        RadioGroup(dateOptions = dateOptions, onDatePick = onDatePick)
         HorizontalDivider(color = MaterialTheme.colorScheme.outline)
         Spacer(modifier = Modifier.height(Dimens.SideMargin))
         Text(
-            text = "Subtotal $5.00",
+            text = "Subtotal $${price}",
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.End,
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         )
 
         Row(
@@ -71,8 +72,7 @@ fun PickupScreen(
                 )
             ) {
                 Text(
-                    text = "Cancel".uppercase(),
-                    style = MaterialTheme.typography.labelLarge
+                    text = "Cancel".uppercase(), style = MaterialTheme.typography.labelLarge
                 )
             }
             Button(
@@ -84,13 +84,11 @@ fun PickupScreen(
                     contentColor = MaterialTheme.colorScheme.onPrimary
                 ),
                 elevation = ButtonDefaults.buttonElevation(
-                    defaultElevation = 2.dp,
-                    pressedElevation = 8.dp
+                    defaultElevation = 2.dp, pressedElevation = 8.dp
                 )
             ) {
                 Text(
-                    text = "Next".uppercase(),
-                    style = MaterialTheme.typography.labelLarge
+                    text = "Next".uppercase(), style = MaterialTheme.typography.labelLarge
                 )
             }
         }
@@ -100,27 +98,28 @@ fun PickupScreen(
 
 
 @Composable
-private fun RadioGroup() {
-    val radioOptions = listOf(
-        "Thursday", "Friday", "Saturday", "Sunday"
-    )
-    val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0]) }
+private fun RadioGroup(
+    dateOptions: List<String>,
+    onDatePick: (String) -> Unit
+) {
+    val (selectedOption, onOptionSelected) = remember { mutableStateOf(dateOptions[0]) }
     Column(Modifier.selectableGroup()) {
-        radioOptions.forEach { text ->
+        dateOptions.forEach { text ->
             Row(
                 Modifier
                     .fillMaxWidth()
                     .selectable(
                         selected = (text == selectedOption),
-                        onClick = { onOptionSelected(text) },
+                        onClick = {
+                            onOptionSelected(text)
+                            onDatePick(text)
+                        },
                         role = Role.RadioButton
                     )
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically
+                    .padding(16.dp), verticalAlignment = Alignment.CenterVertically
             ) {
                 RadioButton(
-                    selected = (text == selectedOption),
-                    onClick = null
+                    selected = (text == selectedOption), onClick = null
                 )
                 Text(
                     text = text,
@@ -137,10 +136,12 @@ private fun RadioGroup() {
 private fun Preview() {
     CupcakeTheme {
         PickupScreen(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             onCancelOrder = {},
             onNextButtonClicked = { },
+            onDatePick = {},
+            dateOptions = listOf("Thursday", "Friday", "Saturday", "Sunday"),
+            price = 5.00
         )
     }
 }

@@ -22,12 +22,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.cupcake.model.HomeState
 import com.example.cupcake.theme.CupcakeTheme
 import com.example.cupcake.theme.Dimens
+import kotlin.String
 
 @Composable
 fun SummaryScreen(
     modifier: Modifier = Modifier,
+    state: HomeState,
     onSendOrder: () -> Unit,
     onCancelOrder: () -> Unit,
 ) {
@@ -38,31 +41,31 @@ fun SummaryScreen(
         horizontalAlignment = Alignment.Start
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            val quantity = state.quantity
             OrderDetailItem(
                 label = "Quantity",
-                value = "6 cupcakes"
+                value = if (quantity == 1) "$quantity cupcake"
+                else "$quantity cupcakes"
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
             OrderDetailItem(
                 label = "Flavor",
-                value = "Chocolate"
+                value = state.flavor
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
             OrderDetailItem(
                 label = "Pickup Date",
-                value = "Sunday"
+                value = state.date
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
             Text(
-                text = "Total $5.00".uppercase(),
+                text = "Total $${state.price}".uppercase(),
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.End
             )
         }
@@ -94,20 +97,15 @@ fun SummaryScreen(
                 color = MaterialTheme.colorScheme.primary
             )
         }
-
-
     }
 }
 
 @Composable
 fun OrderDetailItem(
-    label: String,
-    value: String,
-    modifier: Modifier = Modifier
+    label: String, value: String, modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
+        modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
             text = label.uppercase(),
@@ -131,10 +129,12 @@ fun OrderDetailItem(
 private fun Preview() {
     CupcakeTheme {
         SummaryScreen(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             onCancelOrder = {},
             onSendOrder = {},
+            state = HomeState(
+                quantity = 0, flavor = "Vanilla", date = "", price = 5.0
+            )
         )
     }
 }

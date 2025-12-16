@@ -20,6 +20,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -34,6 +35,8 @@ import com.example.cupcake.theme.Dimens
 @Composable
 fun FlavorScreen(
     modifier: Modifier = Modifier,
+    price: Double,
+    onSelectFlavor: (String) -> Unit,
     onCancelOrder: () -> Unit,
     onNextButtonClicked: () -> Unit,
 ) {
@@ -43,11 +46,11 @@ fun FlavorScreen(
             .padding(8.dp),
         horizontalAlignment = Alignment.Start
     ) {
-        RadioGroup()
+        RadioGroup(onSelectFlavor = onSelectFlavor)
         HorizontalDivider(color = MaterialTheme.colorScheme.outline)
         Spacer(modifier = Modifier.height(Dimens.SideMargin))
         Text(
-            text = "Subtotal $5.00",
+            text = "Subtotal $${price}",
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.End,
@@ -94,11 +97,17 @@ fun FlavorScreen(
 
 
 @Composable
-private fun RadioGroup() {
+private fun RadioGroup(
+    onSelectFlavor: (String) -> Unit
+) {
     val radioOptions = listOf(
         "Vanilla", "Chocolate", "Red Velvet", "Salted Caramel", "Coffee"
     )
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0]) }
+
+    LaunchedEffect(selectedOption) {
+        onSelectFlavor(selectedOption)
+    }
     Column(Modifier.selectableGroup()) {
         radioOptions.forEach { text ->
             Row(
@@ -106,13 +115,17 @@ private fun RadioGroup() {
                     .fillMaxWidth()
                     .selectable(
                         selected = (text == selectedOption),
-                        onClick = { onOptionSelected(text) },
+                        onClick = {
+                            onOptionSelected(text)
+                            onSelectFlavor(text)
+                        },
                         role = Role.RadioButton
                     )
                     .padding(16.dp), verticalAlignment = Alignment.CenterVertically
             ) {
                 RadioButton(
-                    selected = (text == selectedOption), onClick = null
+                    selected = (text == selectedOption),
+                    onClick = null
                 )
                 Text(
                     text = text,
@@ -132,6 +145,8 @@ private fun Preview() {
             modifier = Modifier.fillMaxSize(),
             onCancelOrder = {},
             onNextButtonClicked = { },
+            onSelectFlavor = {},
+            price = 5.00
         )
     }
 }

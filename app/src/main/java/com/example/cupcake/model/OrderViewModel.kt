@@ -34,12 +34,10 @@ private const val PRICE_FOR_SAME_DAY_PICKUP = 3.00
  * pickup date. It also knows how to calculate the total price based on these order details.
  */
 class OrderViewModel : ViewModel() {
-    private val _homeState = MutableStateFlow(HomeState())
-    val homeState = _homeState.asStateFlow()
-
     // Possible date options
     val dateOptions: List<String> = getPickupOptions()
-
+    private val _homeState = MutableStateFlow(HomeState(date = dateOptions[0]))
+    val homeState = _homeState.asStateFlow()
     /**
      * Set the quantity of cupcakes for this order.
      *
@@ -124,6 +122,5 @@ data class HomeState(
     val quantity: Int = 0,
     val flavor: String = "Vanilla",
     val date: String = "",
-    val dateOptions: List<String> = emptyList(),
     val price: Double = 0.0
 )
