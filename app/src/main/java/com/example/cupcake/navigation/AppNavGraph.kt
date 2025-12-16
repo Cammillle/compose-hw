@@ -16,6 +16,7 @@ import com.example.cupcake.screens.SummaryScreen
 fun AppNavGraph(
     navigationState: NavigationState,
     onOrderEvent: (OrderEvent) -> Unit,
+    sendOrder: (String) -> Unit,
     homeState: HomeState,
     dateOptions: List<String>,
     modifier: Modifier = Modifier
@@ -69,7 +70,7 @@ fun AppNavGraph(
         composable(route = Screen.Summary.route) {
             SummaryScreen(
                 modifier = modifier.fillMaxSize(),
-                onSendOrder = {},
+                onSendOrder = sendOrder,
                 onCancelOrder = {
                     onOrderEvent(OrderEvent.CancelOrder)
                     navigationState.navigateTo(Screen.Start.route)

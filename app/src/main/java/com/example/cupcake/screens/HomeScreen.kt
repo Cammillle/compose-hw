@@ -26,7 +26,9 @@ import com.example.cupcake.navigation.rememberNavigationState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    onSendOrder: (String) -> Unit
+) {
     val viewModel: OrderViewModel = viewModel()
     val state = viewModel.homeState.collectAsStateWithLifecycle()
 
@@ -53,7 +55,10 @@ fun HomeScreen() {
                     is OrderEvent.SetQuantity -> viewModel.setQuantity(event.quantity)
                 }
             },
-            dateOptions = viewModel.dateOptions
+            dateOptions = viewModel.dateOptions,
+            sendOrder = { orderText ->
+                onSendOrder(orderText)
+            },
         )
     }
 }

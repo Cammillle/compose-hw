@@ -18,10 +18,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.cupcake.R
 import com.example.cupcake.model.HomeState
 import com.example.cupcake.theme.CupcakeTheme
 import com.example.cupcake.theme.Dimens
@@ -31,9 +33,17 @@ import kotlin.String
 fun SummaryScreen(
     modifier: Modifier = Modifier,
     state: HomeState,
-    onSendOrder: () -> Unit,
+    onSendOrder: (String) -> Unit,
     onCancelOrder: () -> Unit,
 ) {
+    val orderSummary = stringResource(
+        R.string.order_details,
+        state.quantity,
+        state.flavor,
+        state.date,
+        state.price
+    )
+
     Column(
         modifier = modifier
             .background(MaterialTheme.colorScheme.background)
@@ -71,7 +81,9 @@ fun SummaryScreen(
         }
         Spacer(modifier = Modifier.height(32.dp))
         Button(
-            onClick = onSendOrder,
+            onClick = {
+                onSendOrder(orderSummary)
+            },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(2.dp),
             elevation = ButtonDefaults.buttonElevation(
