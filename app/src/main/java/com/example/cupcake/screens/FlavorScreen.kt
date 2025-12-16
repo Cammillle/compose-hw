@@ -40,10 +40,9 @@ fun FlavorScreen(
     Column(
         modifier = modifier
             .background(MaterialTheme.colorScheme.background)
-            .padding(Dimens.SideMargin),
+            .padding(8.dp),
         horizontalAlignment = Alignment.Start
-    )
-    {
+    ) {
         RadioGroup()
         HorizontalDivider(color = MaterialTheme.colorScheme.outline)
         Spacer(modifier = Modifier.height(Dimens.SideMargin))
@@ -52,8 +51,7 @@ fun FlavorScreen(
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.End,
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         )
 
         Row(
@@ -71,8 +69,7 @@ fun FlavorScreen(
                 )
             ) {
                 Text(
-                    text = "Cancel".uppercase(),
-                    style = MaterialTheme.typography.labelLarge
+                    text = "Cancel".uppercase(), style = MaterialTheme.typography.labelLarge
                 )
             }
             Button(
@@ -84,17 +81,14 @@ fun FlavorScreen(
                     contentColor = MaterialTheme.colorScheme.onPrimary
                 ),
                 elevation = ButtonDefaults.buttonElevation(
-                    defaultElevation = 2.dp,
-                    pressedElevation = 8.dp
+                    defaultElevation = 2.dp, pressedElevation = 8.dp
                 )
             ) {
                 Text(
-                    text = "Next".uppercase(),
-                    style = MaterialTheme.typography.labelLarge
+                    text = "Next".uppercase(), style = MaterialTheme.typography.labelLarge
                 )
             }
         }
-
     }
 }
 
@@ -102,8 +96,7 @@ fun FlavorScreen(
 @Composable
 private fun RadioGroup() {
     val radioOptions = listOf(
-        "Vanilla",
-        "Chocolate", "Red Velvet", "Salted Caramel", "Coffee"
+        "Vanilla", "Chocolate", "Red Velvet", "Salted Caramel", "Coffee"
     )
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0]) }
     Column(Modifier.selectableGroup()) {
@@ -116,12 +109,10 @@ private fun RadioGroup() {
                         onClick = { onOptionSelected(text) },
                         role = Role.RadioButton
                     )
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically
+                    .padding(16.dp), verticalAlignment = Alignment.CenterVertically
             ) {
                 RadioButton(
-                    selected = (text == selectedOption),
-                    onClick = null
+                    selected = (text == selectedOption), onClick = null
                 )
                 Text(
                     text = text,
@@ -138,8 +129,7 @@ private fun RadioGroup() {
 private fun Preview() {
     CupcakeTheme {
         FlavorScreen(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             onCancelOrder = {},
             onNextButtonClicked = { },
         )

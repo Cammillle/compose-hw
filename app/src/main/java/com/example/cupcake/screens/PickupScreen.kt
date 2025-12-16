@@ -40,7 +40,7 @@ fun PickupScreen(
     Column(
         modifier = modifier
             .background(MaterialTheme.colorScheme.background)
-            .padding(Dimens.SideMargin),
+            .padding(8.dp),
         horizontalAlignment = Alignment.Start
     )
     {
