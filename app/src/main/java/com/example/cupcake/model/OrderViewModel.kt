@@ -15,11 +15,10 @@
  */
 package com.example.cupcake.model
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.map
-import java.text.NumberFormat
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -35,33 +34,11 @@ private const val PRICE_FOR_SAME_DAY_PICKUP = 3.00
  * pickup date. It also knows how to calculate the total price based on these order details.
  */
 class OrderViewModel : ViewModel() {
-
-    // Quantity of cupcakes in this order
-    private val _quantity = MutableLiveData<Int>()
-    val quantity: LiveData<Int> = _quantity
-
-    // Cupcake flavor for this order
-    private val _flavor = MutableLiveData<String>()
-    val flavor: LiveData<String> = _flavor
+    private val _homeState = MutableStateFlow(HomeState())
+    val homeState = _homeState.asStateFlow()
 
     // Possible date options
     val dateOptions: List<String> = getPickupOptions()
-
-    // Pickup date
-    private val _date = MutableLiveData<String>()
-    val date: LiveData<String> = _date
-
-    // Price of the order so far
-    private val _price = MutableLiveData<Double>()
-    val price: LiveData<String> = _price.map {
-        // Format the price into the local currency and return this as LiveData<String>
-        NumberFormat.getCurrencyInstance().format(it)
-    }
-
-    init {
-        // Set initial values for the order
-        resetOrder()
-    }
 
     /**
      * Set the quantity of cupcakes for this order.
@@ -69,8 +46,10 @@ class OrderViewModel : ViewModel() {
      * @param numberCupcakes to order
      */
     fun setQuantity(numberCupcakes: Int) {
-        _quantity.value = numberCupcakes
-        updatePrice()
+        _homeState.update { state ->
+            state.copy(quantity = numberCupcakes)
+        }
+        updatePrice(_homeState.value)
     }
 
     /**
@@ -79,7 +58,9 @@ class OrderViewModel : ViewModel() {
      * @param desiredFlavor is the cupcake flavor as a string
      */
     fun setFlavor(desiredFlavor: String) {
-        _flavor.value = desiredFlavor
+        _homeState.update { state ->
+            state.copy(flavor = desiredFlavor)
+        }
     }
 
     /**
@@ -88,37 +69,40 @@ class OrderViewModel : ViewModel() {
      * @param pickupDate is the date for pickup as a string
      */
     fun setDate(pickupDate: String) {
-        _date.value = pickupDate
-        updatePrice()
-    }
-
-    /**
-     * Returns true if a flavor has not been selected for the order yet. Returns false otherwise.
-     */
-    fun hasNoFlavorSet(): Boolean {
-        return _flavor.value.isNullOrEmpty()
+        _homeState.update { state ->
+            state.copy(date = pickupDate)
+        }
+        updatePrice(_homeState.value)
     }
 
     /**
      * Reset the order by using initial default values for the quantity, flavor, date, and price.
      */
     fun resetOrder() {
-        _quantity.value = 0
-        _flavor.value = ""
-        _date.value = dateOptions[0]
-        _price.value = 0.0
+        _homeState.update { state ->
+            state.copy(
+                quantity = 0,
+                flavor = "Vanilla",
+                date = dateOptions[0],
+                price = 0.0
+            )
+        }
     }
 
     /**
      * Updates the price based on the order details.
      */
-    private fun updatePrice() {
-        var calculatedPrice = (quantity.value ?: 0) * PRICE_PER_CUPCAKE
+    private fun updatePrice(state: HomeState) {
+        var calculatedPrice = (state.quantity) * PRICE_PER_CUPCAKE
         // If the user selected the first option (today) for pickup, add the surcharge
-        if (dateOptions[0] == _date.value) {
+        if (dateOptions[0] == state.date) {
             calculatedPrice += PRICE_FOR_SAME_DAY_PICKUP
         }
-        _price.value = calculatedPrice
+        _homeState.update { state ->
+            state.copy(
+                price = calculatedPrice
+            )
+        }
     }
 
     /**
@@ -135,3 +119,11 @@ class OrderViewModel : ViewModel() {
         return options
     }
 }
+
+data class HomeState(
+    val quantity: Int = 0,
+    val flavor: String = "Vanilla",
+    val date: String = "",
+    val dateOptions: List<String> = emptyList(),
+    val price: Double = 0.0
+)
