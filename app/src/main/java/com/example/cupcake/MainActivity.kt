@@ -26,7 +26,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import com.example.cupcake.screens.HomeScreen
 import com.example.cupcake.theme.CupcakeTheme
-import java.io.IOException
 
 /**
  * Activity for cupcake order flow.
@@ -64,12 +63,6 @@ class MainActivity : ComponentActivity() {
             Toast.makeText(
                 this,
                 "No available apps",
-                Toast.LENGTH_SHORT
-            ).show()
-        } catch (e: IOException) {
-            Toast.makeText(
-                this,
-                "Unknown error",
                 Toast.LENGTH_SHORT
             ).show()
         }
