@@ -1,0 +1,69 @@
+unstable class com.example.cupcake.MainActivity {
+  <runtime stability> = Unstable
+}
+stable class com.example.cupcake.model.OrderEvent.SetQuantity {
+  stable val quantity: Int
+  <runtime stability> = Stable
+}
+stable class com.example.cupcake.model.OrderEvent.SetFlavor {
+  stable val flavor: String
+  <runtime stability> = Stable
+}
+stable class com.example.cupcake.model.OrderEvent.SetDate {
+  stable val date: String
+  <runtime stability> = Stable
+}
+stable class com.example.cupcake.model.OrderEvent.CancelOrder {
+  <runtime stability> = Stable
+}
+stable class com.example.cupcake.model.OrderEvent {
+  <runtime stability> = Stable
+}
+unstable class com.example.cupcake.model.OrderViewModel {
+  unstable val dateOptions: List<String>
+  unstable val _homeState: MutableStateFlow<HomeState>
+  unstable val homeState: StateFlow<HomeState>
+  <runtime stability> = Unstable
+}
+stable class com.example.cupcake.model.HomeState {
+  stable val quantity: Int
+  stable val flavor: String
+  stable val date: String
+  stable val price: Double
+  <runtime stability> = Stable
+}
+unstable class com.example.cupcake.navigation.NavigationState {
+  unstable val navHostController: NavHostController
+  <runtime stability> = Unstable
+}
+stable class com.example.cupcake.navigation.Screen.Start {
+  <runtime stability> = Stable
+}
+stable class com.example.cupcake.navigation.Screen.Flavor {
+  <runtime stability> = Stable
+}
+stable class com.example.cupcake.navigation.Screen.Pickup {
+  <runtime stability> = Stable
+}
+stable class com.example.cupcake.navigation.Screen.Summary {
+  <runtime stability> = Stable
+}
+stable class com.example.cupcake.navigation.Screen {
+  stable val route: String
+  <runtime stability> = Stable
+}
+stable class com.example.cupcake.theme.Dimens {
+  stable val ImageSize: Dp
+  stable val OrderCupcakeButtonWidth: Dp
+  stable val SideMargin: Dp
+  stable val MarginBetweenElements: Dp
+  stable val RadioButtonPadding: Dp
+  stable val OrderSummaryMargin: Dp
+  stable val ButtonHeight: Dp
+  stable val ButtonVerticalPadding: Dp
+  stable val ButtonHorizontalPadding: Dp
+  stable val ImageTopMargin: Dp
+  stable val TitleBottomMargin: Dp
+  stable val TitleTopMargin: Dp
+  <runtime stability> = Stable
+}

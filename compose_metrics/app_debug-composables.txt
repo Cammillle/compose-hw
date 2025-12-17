@@ -1,0 +1,73 @@
+restartable skippable scheme("[androidx.compose.ui.UiComposable, [androidx.compose.ui.UiComposable]]") fun com.example.cupcake.customview.MyColumn(
+  stable modifier: Modifier? = @static <expression>
+  stable content: Function2<Composer, Int, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun com.example.cupcake.customview.PreviewMyColumn()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun com.example.cupcake.navigation.AppNavGraph(
+  stable modifier: Modifier? = @static <expression>
+  unstable navigationState: NavigationState
+  stable onOrderEvent: Function1<OrderEvent, Unit>
+  stable sendOrder: Function1<String, Unit>
+  stable homeState: HomeState
+  unstable dateOptions: List<String>? = @static <expression>
+)
+fun com.example.cupcake.navigation.rememberNavigationState(
+  unstable navHostController: NavHostController? = @dynamic <expression>
+): NavigationState
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun com.example.cupcake.screens.FlavorScreen(
+  stable modifier: Modifier? = @static <expression>
+  stable price: Double
+  stable onSelectFlavor: Function1<String, Unit>
+  stable onCancelOrder: Function0<Unit>
+  stable onNextButtonClicked: Function0<Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun com.example.cupcake.screens.RadioGroup(
+  stable onSelectFlavor: Function1<String, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun com.example.cupcake.screens.Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun com.example.cupcake.screens.HomeScreen(
+  stable onSendOrder: Function1<String, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun com.example.cupcake.screens.TopAppBarForCurrentScreen(
+  unstable currentDestination: NavDestination?
+  stable onNavigateBack: Function0<Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun com.example.cupcake.screens.PickupScreen(
+  stable modifier: Modifier? = @static <expression>
+  stable price: Double
+  unstable dateOptions: List<String>? = @static <expression>
+  stable onDatePick: Function1<String, Unit>
+  stable onCancelOrder: Function0<Unit>
+  stable onNextButtonClicked: Function0<Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun com.example.cupcake.screens.RadioGroup(
+  unstable dateOptions: List<String>? = @static <expression>
+  stable onDatePick: Function1<String, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun com.example.cupcake.screens.Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun com.example.cupcake.screens.StartScreen(
+  stable modifier: Modifier? = @static <expression>
+  stable onOrderCupcake: Function1<Int, Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun com.example.cupcake.screens.OrderButton(
+  stable text: String
+  stable onClick: Function0<Unit>
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun com.example.cupcake.screens.Preview()
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun com.example.cupcake.screens.SummaryScreen(
+  stable modifier: Modifier? = @static <expression>
+  stable state: HomeState
+  stable onSendOrder: Function1<String, Unit>
+  stable onCancelOrder: Function0<Unit>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun com.example.cupcake.screens.OrderDetailItem(
+  stable label: String
+  stable value: String
+  stable modifier: Modifier? = @static <expression>
+)
+restartable skippable scheme("[androidx.compose.ui.UiComposable]") fun com.example.cupcake.screens.Preview()
+restartable skippable scheme("[0, [0]]") fun com.example.cupcake.theme.CupcakeTheme(
+  stable darkTheme: Boolean = @dynamic <expression>
+  stable content: Function2<Composer, Int, Unit>
+)
