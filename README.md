@@ -6,6 +6,12 @@
 вместо них будут composable функции. Переходы между экранами на composable функциях должны быть анимированы. Можно использовать любой удобный
 способ навигации. Собрать метрики с помощью compose-compiler metrics и приложить их - <https://github.com/androidx/androidx/blob/androidx-main/compose/compiler/design/compiler-metrics.md>
 
+## 🎥 Демонстрация
+
+<p align="center">
+  <img src="https://gifs.obs.ru-moscow-1.hc.sbercloud.ru/18399e070af7663980db77df909adede4e42e750f7260f2da8fb6de07e040d09.gif" width="300" alt="Demo">
+</p>
+
 # Part 2
 
 Создать кастомную вьюгруппу, которая будет работать как Column, но располагать все элементы по диагонали. Создать для этой фукнции функцию Preview,
