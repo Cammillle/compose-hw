@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,7 +52,7 @@ fun StartScreen(
             contentScale = ContentScale.Fit
         )
         Text(
-            text = "Order Cupcakes",
+            text = stringResource(R.string.order_cupcakes),
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
@@ -63,17 +64,17 @@ fun StartScreen(
                 )
         )
         OrderButton(
-            text = "One cupcake",
+            text = stringResource(R.string.one_cupcake),
             onClick = { onOrderCupcake(1) }
         )
 
         OrderButton(
-            text = "Six cupcakes",
+            text = stringResource(R.string.six_cupcakes),
             onClick = { onOrderCupcake(6) }
         )
 
         OrderButton(
-            text = "Twelve cupcakes",
+            text = stringResource(R.string.twelve_cupcakes),
             onClick = { onOrderCupcake(12) }
         )
     }

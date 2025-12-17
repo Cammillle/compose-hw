@@ -15,10 +15,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.cupcake.R
 import com.example.cupcake.model.OrderEvent
 import com.example.cupcake.model.OrderViewModel
 import com.example.cupcake.navigation.AppNavGraph
@@ -70,14 +72,19 @@ private fun TopAppBarForCurrentScreen(
     currentDestination: NavDestination?,
     onNavigateBack: () -> Unit
 ) {
-    val (title, showBackButton) = remember(currentDestination) {
+    val (titleResId, showBackButton) = remember(currentDestination) {
         when (currentDestination?.route) {
-            Screen.Start.route -> "Cupcake" to false
-            Screen.Flavor.route -> "Choose Flavor" to true
-            Screen.Pickup.route -> "Choose Pickup Date" to true
-            Screen.Summary.route -> "Order Summary" to true
-            else -> "" to false
+            Screen.Start.route -> R.string.order_cupcakes to false
+            Screen.Flavor.route -> R.string.choose_flavor to true
+            Screen.Pickup.route -> R.string.choose_pickup_date to true
+            Screen.Summary.route -> R.string.order_summary to true
+            else -> null to false
         }
+    }
+    val title = if (titleResId != null) {
+        stringResource(id = titleResId)
+    } else {
+        ""
     }
 
     TopAppBar(

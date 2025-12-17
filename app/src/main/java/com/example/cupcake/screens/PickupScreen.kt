@@ -24,10 +24,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.cupcake.R
 import com.example.cupcake.theme.CupcakeTheme
 import com.example.cupcake.theme.Dimens
 
@@ -50,7 +52,7 @@ fun PickupScreen(
         HorizontalDivider(color = MaterialTheme.colorScheme.outline)
         Spacer(modifier = Modifier.height(Dimens.SideMargin))
         Text(
-            text = "Subtotal $${price}",
+            text = stringResource(R.string.subtotal_price, price),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.End,
@@ -72,7 +74,8 @@ fun PickupScreen(
                 )
             ) {
                 Text(
-                    text = "Cancel".uppercase(), style = MaterialTheme.typography.labelLarge
+                    text = stringResource(R.string.cancel).uppercase(),
+                    style = MaterialTheme.typography.labelLarge
                 )
             }
             Button(
@@ -88,7 +91,8 @@ fun PickupScreen(
                 )
             ) {
                 Text(
-                    text = "Next".uppercase(), style = MaterialTheme.typography.labelLarge
+                    text = stringResource(R.string.next).uppercase(),
+                    style = MaterialTheme.typography.labelLarge
                 )
             }
         }

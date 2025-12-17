@@ -56,23 +56,23 @@ fun SummaryScreen(
         ) {
             val quantity = state.quantity
             OrderDetailItem(
-                label = "Quantity",
+                label = stringResource(R.string.quantity),
                 value = if (quantity == 1) "$quantity cupcake"
                 else "$quantity cupcakes"
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
             OrderDetailItem(
-                label = "Flavor",
+                label = stringResource(R.string.flavor),
                 value = state.flavor
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
             OrderDetailItem(
-                label = "Pickup Date",
+                label = stringResource(R.string.pickup_date),
                 value = state.date
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
             Text(
-                text = "Total $${state.price}".uppercase(),
+                text = stringResource(R.string.total_price, state.price).uppercase(),
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.fillMaxWidth(),
@@ -91,7 +91,7 @@ fun SummaryScreen(
             ),
         ) {
             Text(
-                text = "Send order to another app".uppercase(),
+                text = stringResource(R.string.send).uppercase(),
                 style = MaterialTheme.typography.labelLarge,
                 modifier = Modifier.padding(horizontal = 4.dp)
             )
@@ -104,7 +104,7 @@ fun SummaryScreen(
             shape = RoundedCornerShape(2.dp)
         ) {
             Text(
-                text = "Cancel".uppercase(),
+                text = stringResource(R.string.cancel).uppercase(),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary
             )
