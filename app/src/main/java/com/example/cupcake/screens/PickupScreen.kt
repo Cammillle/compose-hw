@@ -119,7 +119,8 @@ private fun RadioGroup(
                     .padding(16.dp), verticalAlignment = Alignment.CenterVertically
             ) {
                 RadioButton(
-                    selected = (text == selectedOption), onClick = null
+                    selected = (text == selectedOption),
+                    onClick = null
                 )
                 Text(
                     text = text,
