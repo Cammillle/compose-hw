@@ -105,9 +105,6 @@ private fun RadioGroup(
     )
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0]) }
 
-    LaunchedEffect(selectedOption) {
-        onSelectFlavor(selectedOption)
-    }
     Column(Modifier.selectableGroup()) {
         radioOptions.forEach { text ->
             Row(

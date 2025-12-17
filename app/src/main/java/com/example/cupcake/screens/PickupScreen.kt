@@ -35,7 +35,7 @@ import com.example.cupcake.theme.Dimens
 fun PickupScreen(
     modifier: Modifier = Modifier,
     price: Double,
-    dateOptions: List<String>,
+    dateOptions: List<String> = emptyList(),
     onDatePick: (String) -> Unit,
     onCancelOrder: () -> Unit,
     onNextButtonClicked: () -> Unit,
@@ -99,7 +99,7 @@ fun PickupScreen(
 
 @Composable
 private fun RadioGroup(
-    dateOptions: List<String>,
+    dateOptions: List<String> = emptyList(),
     onDatePick: (String) -> Unit
 ) {
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(dateOptions[0]) }

@@ -14,12 +14,12 @@ import com.example.cupcake.screens.SummaryScreen
 
 @Composable
 fun AppNavGraph(
+    modifier: Modifier = Modifier,
     navigationState: NavigationState,
     onOrderEvent: (OrderEvent) -> Unit,
     sendOrder: (String) -> Unit,
     homeState: HomeState,
-    dateOptions: List<String>,
-    modifier: Modifier = Modifier
+    dateOptions: List<String> = emptyList()
 ) {
     NavHost(
         navController = navigationState.navHostController,
