@@ -84,67 +84,45 @@ dependencies {
 }
 
 jacoco {
-    toolVersion = "0.8.11"
+    toolVersion = "0.8.14"
 }
-
-tasks.withType<Test>().configureEach {
-    useJUnitPlatform()
-}
-
 tasks.register<JacocoReport>("jacocoTestReport") {
-
-    dependsOn("testDebugUnitTest", "connectedDebugAndroidTest")
-
+    dependsOn("testDebugUnitTest")
     reports {
         xml.required.set(true)
         html.required.set(true)
     }
-
-    val excludes = listOf(
+    val fileFilter = listOf(
         "**/R.class",
         "**/R$*.class",
         "**/BuildConfig.*",
         "**/Manifest*.*",
-        "**/*Test*.*",
-        "android/**/*.*",
-        "**/*\$Lambda$*.*",
-        "**/*\$inlined$*.*"
+        "**/*Test*.*"
     )
-
-    val kotlinClasses = fileTree(
-        "${buildDir}/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes"
-    ) {
-        exclude(excludes)
-    }
-
-    val javaClasses = fileTree(
-        "${buildDir}/intermediates/javac/debug/compileDebugJavaWithJavac/classes"
-    ) {
-        exclude(excludes)
-    }
-
-    classDirectories.setFrom(files(kotlinClasses, javaClasses))
-
-    sourceDirectories.setFrom(
-        files(
-            "src/main/java",
-            "src/main/kotlin"
+    val buildDirPath = buildDir.absolutePath
+    val classes = fileTree(buildDirPath) {
+        include(
+            "intermediates/javac/debug/classes/**/*.class",
+            "intermediates/kotlin/classes/debug/**/*.class",
+            "tmp/kotlin-classes/debug/**/*.class",
+            "classes/kotlin/debug/**/*.class"
         )
-    )
-
-    executionData.setFrom(
-        fileTree(buildDir) {
-            include(
-                "jacoco/testDebugUnitTest.exec",
-                "outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec",
-                "outputs/code_coverage/debugAndroidTest/connected/*.ec"
-            )
-        }
-    )
-}
-
-tasks.register("hello") {
-    doLast {
-        println("Hello from Gradle")
+        exclude(excludes)
     }
+//    val kotlinClasses = fileTree("${layout.buildDirectory}/tmp/kotlin-classes/debug") {
+//        exclude(fileFilter)
+//    }
+//    val javaClasses = fileTree("${layout.buildDirectory}/intermediates/javac/debug/classes") {
+//        exclude(fileFilter)
+//    }
+    sourceDirectories.setFrom(files("src/main/java", "src/main/kotlin"))
+    classDirectories.setFrom(files( classes))
+    executionData.setFrom(fileTree(buildDir) {
+        include(
+            "jacoco/testDebugUnitTest.exec",
+            "outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec"
+        )
+    })
 }
+
+
