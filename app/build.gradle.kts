@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotest)
+    jacoco
 }
 
 android {
@@ -21,6 +23,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            enableAndroidTestCoverage = true
+            enableUnitTestCoverage = true
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -32,6 +38,14 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+    testOptions{
+        unitTests {
+            isReturnDefaultValues = true
+            all {
+                it.useJUnitPlatform()
+            }
+        }
     }
     kotlinOptions {
         jvmTarget = "17"
@@ -60,4 +74,77 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation(libs.androidx.compose.material.icons.extended)
+
+    // Kotest
+    testImplementation(libs.kotest.assertions.core)
+    testImplementation(libs.kotest.runner)
+    testImplementation(libs.coroutine.test)
+
+    androidTestImplementation("androidx.navigation:navigation-testing:2.9.6")
+}
+
+jacoco {
+    toolVersion = "0.8.11"
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
+}
+
+tasks.register<JacocoReport>("jacocoTestReport") {
+
+    dependsOn("testDebugUnitTest", "connectedDebugAndroidTest")
+
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+
+    val excludes = listOf(
+        "**/R.class",
+        "**/R$*.class",
+        "**/BuildConfig.*",
+        "**/Manifest*.*",
+        "**/*Test*.*",
+        "android/**/*.*",
+        "**/*\$Lambda$*.*",
+        "**/*\$inlined$*.*"
+    )
+
+    val kotlinClasses = fileTree(
+        "${buildDir}/intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes"
+    ) {
+        exclude(excludes)
+    }
+
+    val javaClasses = fileTree(
+        "${buildDir}/intermediates/javac/debug/compileDebugJavaWithJavac/classes"
+    ) {
+        exclude(excludes)
+    }
+
+    classDirectories.setFrom(files(kotlinClasses, javaClasses))
+
+    sourceDirectories.setFrom(
+        files(
+            "src/main/java",
+            "src/main/kotlin"
+        )
+    )
+
+    executionData.setFrom(
+        fileTree(buildDir) {
+            include(
+                "jacoco/testDebugUnitTest.exec",
+                "outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec",
+                "outputs/code_coverage/debugAndroidTest/connected/*.ec"
+            )
+        }
+    )
+}
+
+tasks.register("hello") {
+    doLast {
+        println("Hello from Gradle")
+    }
 }

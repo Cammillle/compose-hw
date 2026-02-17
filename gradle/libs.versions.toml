@@ -10,6 +10,9 @@ activityCompose = "1.12.1"
 composeBom = "2025.12.00"
 material = "1.13.0"
 navigationCompose = "2.9.6"
+kotest = "6.1.2"
+coroutine = "1.10.2"
+
 
 [libraries]
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
@@ -30,7 +33,18 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 androidx-compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 
+# kotest
+kotest-assertions-core = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
+kotest-runner = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotest" }
+
+#coroutine test
+coroutine-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutine" }
+
+
+
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotest = { id = "io.kotest", version.ref = "kotest" }
